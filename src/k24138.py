@@ -18,12 +18,16 @@ def lecture05_01():
     # カメラで取得した画像を取得（ファイル保存機能は使わない）
     capture_img = app.get_img()
     if capture_img is None:
-        raise RuntimeError("カメラから画像を取得できませんでした。run() を実行して 'q' キーでキャプチャしてください。")
+        raise RuntimeError(
+            "カメラから画像を取得できませんでした。run() を実行して 'q' キーでキャプチャしてください。"
+        )
 
     # Google 画像を読み込む
-    google_img = cv2.imread('images/google.png')
+    google_img = cv2.imread("images/google.png")
     if google_img is None:
-        raise FileNotFoundError("images/google.png が見つかりません。パスを確認してください。")
+        raise FileNotFoundError(
+            "images/google.png が見つかりません。パスを確認してください。"
+        )
 
     g_h, g_w, g_c = google_img.shape
     c_h, c_w, c_c = capture_img.shape
@@ -36,7 +40,7 @@ def lecture05_01():
             # コピー可能な領域サイズを計算（端で切れるのを許容する）
             h = min(c_h, g_h - y)
             w = min(c_w, g_w - x)
-            tiled[y:y+h, x:x+w] = capture_img[0:h, 0:w]
+            tiled[y : y + h, x : x + w] = capture_img[0:h, 0:w]
 
     # 白色(255,255,255)の部分を tiled の画素で置換（BGR順）
     # 白色の定義は完全一致とする
@@ -46,13 +50,13 @@ def lecture05_01():
     result[white_mask] = tiled[white_mask]
 
     # 保存（課題のファイル名ルールに従う）。output_images フォルダ内に保存する。
-    out_filename = 'output_images/lecture05_01_k24138.png'
+    out_filename = "output_images/lecture05_01_k24138.png"
     ok = cv2.imwrite(out_filename, result)
     if not ok:
         raise IOError(f"画像の保存に失敗しました: {out_filename}")
     print(f"保存しました: {out_filename}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     lecture05_01()
-
+    pass
